@@ -1,1 +1,2 @@
 Hello,this is my firsrt Git file
+今天成功 push 到 GitHub 了！
