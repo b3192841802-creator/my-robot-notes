@@ -29,14 +29,17 @@ def log_operation(message):
     记录操作日志到 robot_log.txt 文件
     参数: message (str) - 要记录的消息
     """
-    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    log_line = f"[{now}] {message}\n"
+    try:
+        now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        log_line = f"[{now}] {message}\n"
     
-    with open("robot_log.txt", "a") as file:
-        file.write(log_line)
+        with open("robot_log.txt", "a") as file:
+            file.write(log_line)
     
-    print(f"已记录日志：{log_line.strip()}")
-
+        print(f"已记录日志：{log_line.strip()}")
+    except Exception as e:
+        print(f"日志记录失败：{e}")
+        print("可能是权限或路径问题，继续运行...")
 
 # ================= 主程序区 =================
 
@@ -88,6 +91,29 @@ def main():
     print("\n=== 交互模式：请输入机械臂当前状态 ===")
     print("可选状态：已复位 / 绑定中 / 未复位 / 退出")
     print("输入 '退出' 结束程序")
+
+
+    # ================= 新增：字典 - 命令数据库 =================
+    # 字典（dict）：键是命令简称，值是元组（说明, 密码/参数）
+    commands_db = {
+        "绑定 CAN": ("绑定 CAN 口，需要密码", "123456"),
+        "启动相机": ("启动所有相机话题", "./start_cameras.sh"),
+        "复位双臂": ("复位左右臂到初始位", "./reset_to_initial.sh both"),
+        "遥操作": ("启动双臂遥操作", "./launch_dual_bilateral_with_aggregator.sh"),
+        "采集数据": ("启动数据采集并保存视频", "ros2 launch openarm_vla_collector   vla_collector_16d.launch.py save_videos:=true")
+    }
+
+    # 在 main() 里加：显示命令数据库
+    print("\nOpenArm 命令数据库（字典）：")
+    for cmd, (desc, param) in commands_db.items():
+        print(f"- {cmd}: {desc}")
+        if param:  # 如果有参数/密码
+            print(f"  参数/密码: {param}")
+
+
+
+
+
     while True:  # 一直循环，直到用户输入“退出”
         user_input = input("请输入状态: ").strip()  # input() 获取用户键盘输入，strip() 去掉多余空格
 
