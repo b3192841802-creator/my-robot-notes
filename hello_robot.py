@@ -25,3 +25,16 @@ commands = [
 print("\nOpenArm 常用命令列表：")
 for i, cmd in enumerate(commands, 1):
     print(f"{i}. {cmd}")
+
+
+# 条件判断：if / elif / else
+arm_status = "已复位"   # 可以改成 "已复位" 测试不同情况
+
+if arm_status == "已复位":
+    print("机械臂已复位，可以开始遥操作！")
+    print("启动命令：./launch_dual_bilateral_with_aggregator.sh")
+elif arm_status == "绑定中":
+    print("CAN 正在绑定，请稍等...")
+else:
+    print("请先复位机械臂！")
+    print("复位命令：./reset_to_initial.sh both")
