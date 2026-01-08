@@ -84,6 +84,22 @@ def main():
         else:
             print(f"{cmd} - OK")
 
+    # ================= 新增：交互输入 =================
+    print("\n=== 交互模式：请输入机械臂当前状态 ===")
+    print("可选状态：已复位 / 绑定中 / 未复位 / 退出")
+    print("输入 '退出' 结束程序")
+    while True:  # 一直循环，直到用户输入“退出”
+        user_input = input("请输入状态: ").strip()  # input() 获取用户键盘输入，strip() 去掉多余空格
+
+        if user_input == "退出":
+            print("程序退出，谢谢使用！")
+            break  # 跳出循环，结束程序
+
+    # 调用之前写的函数
+        check_arm_status(user_input)
+
+    # 记录用户操作到日志
+        log_operation(f"用户输入状态：{user_input}")
 
 # 程序入口（标准写法）
 if __name__ == "__main__":
