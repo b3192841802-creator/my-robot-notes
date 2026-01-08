@@ -38,3 +38,14 @@ elif arm_status == "绑定中":
 else:
     print("请先复位机械臂！")
     print("复位命令：./reset_to_initial.sh both")
+
+# 结合列表 + if：检查命令是否完整
+required_commands = ["绑定 CAN", "启动相机", "复位双臂"]
+
+print("\n检查命令完整性：")
+for cmd in required_commands:
+    if "复位" in cmd:
+        print(f"{cmd} - 重要！必须先执行")
+    else:
+        print(f"{cmd} - OK")
+
