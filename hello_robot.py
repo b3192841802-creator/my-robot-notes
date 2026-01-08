@@ -49,3 +49,37 @@ for cmd in required_commands:
     else:
         print(f"{cmd} - OK")
 
+
+# 函数定义：检查机械臂状态并给出建议
+def check_arm_status(status):
+    if status == "已复位":
+        print("机械臂已复位，可以开始遥操作！")
+        print("建议命令：./launch_dual_bilateral_with_aggregator.sh")
+    elif status == "绑定中":
+        print("CAN 正在绑定，请稍等...")
+    else:
+        print("请先复位机械臂！")
+        print("复位命令：./reset_to_initial.sh both")
+
+# 调用函数（测试不同状态）
+print("\n测试函数：")
+check_arm_status("已复位")
+check_arm_status("未复位")
+
+
+# 文件读写：记录操作日志
+from datetime import datetime  # 导入时间模块
+
+def log_operation(message):
+    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    log_line = f"[{now}] {message}\n"
+    
+    # 以追加模式打开文件（"a" = append）
+    with open("robot_log.txt", "a") as file:
+        file.write(log_line)
+    
+    print(f"已记录日志：{log_line.strip()}")
+
+# 调用日志函数
+log_operation("启动相机成功")
+log_operation("复位右臂完成")
