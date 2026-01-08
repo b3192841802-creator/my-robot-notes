@@ -13,3 +13,15 @@ is_learning_git = True
 print("我的名字是：" + name)
 print("我今年 " + str(age) + " 岁")          # 把数字转成字符串才能拼接
 print(f"我在学 Git 和 Python：{is_learning_git}")   # f-string（最推荐的格式化方式）
+
+# 列表 + 循环
+commands = [
+    "绑定 CAN: ./auto_bind_can.sh",
+    "启动相机: ./start_cameras.sh",
+    "复位双臂: ./reset_to_initial.sh both",
+    "数据采集: ros2 launch ... vla_collector_16d.launch.py"
+]
+
+print("\nOpenArm 常用命令列表：")
+for i, cmd in enumerate(commands, 1):
+    print(f"{i}. {cmd}")
