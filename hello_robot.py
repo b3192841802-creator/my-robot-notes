@@ -57,6 +57,7 @@ def print_help():
 # ================= 主程序区 =================
 
 def main():
+
     print("欢迎使用 OpenArm 辅助工具 v1.0")
     
     # ================= 命令行参数处理（新功能） =================
@@ -85,6 +86,17 @@ def main():
             return
     
     # ================= 如果没有命令行参数，走原来的完整流程 =================
+
+    # ================= 命令字典 =================
+    commands_db = {
+    "绑定 CAN": ("绑定 CAN 口，需要密码", "wujiezhihui0317"),
+    "启动相机": ("启动所有相机话题", "./start_cameras.sh"),
+    "复位双臂": ("复位左右臂到初始位", "./reset_to_initial.sh both"),
+    "遥操作": ("启动双臂遥操作", "./launch_dual_bilateral_with_aggregator.sh"),
+    "采集数据": ("启动数据采集并保存视频", "ros2 launch openarm_vla_collector vla_collector_16d.launch.py save_videos:=true")
+    }
+
+
     # 变量输出（保留你原来的）
     name = "haha"
     age = 20
@@ -121,12 +133,42 @@ def main():
     print("输入 '退出' 结束程序")
     
     while True:
-        user_input = input("请输入状态: ").strip()
-        if user_input == "退出":
-            print("程序退出，谢谢使用！")
-            break
-        check_arm_status(user_input)
-        log_operation(f"用户输入状态：{user_input}")
+            print("\n=== OpenArm 辅助工具菜单 ===")
+            print("1. 检查机械臂状态")
+            print("2. 查看所有命令")
+            print("3. 查看命令数据库")
+            print("4. 记录自定义日志")
+            print("5. 退出程序")
+        
+            choice = input("请选择 (1-5): ").strip()
+        
+            if choice == "1":
+                status = input("请输入机械臂状态 (已复位/绑定中/未复位): ").strip()
+                check_arm_status(status)
+                log_operation(f"检查状态: {status}")
+            
+            elif choice == "2":
+                print("\nOpenArm 常用命令列表：")
+                for i, cmd in enumerate(commands, 1):
+                    print(f"{i}. {cmd}")
+                
+            elif choice == "3":
+                print("\nOpenArm 命令数据库：")
+                for cmd, (desc, param) in commands_db.items():
+                    print(f"- {cmd}: {desc}")
+                    if param:
+                        print(f"  参数/密码: {param}")
+                    
+            elif choice == "4":
+                msg = input("请输入要记录的日志: ").strip()
+                log_operation(msg)
+            
+            elif choice == "5":
+                print("谢谢使用，再见！")
+                break
+            
+            else:
+                print("无效选择，请输入 1-5")
 
 
 
