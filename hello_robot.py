@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# 用法： ./hello_robot.py  或  python3 hello_robot.py
 # hello_robot.py
 # 作者: haha
 # 日期: 2026-01-08
