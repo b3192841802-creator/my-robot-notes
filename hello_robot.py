@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # hello_robot.py
 # 作者: haha
 # 日期: 2026-01-08
