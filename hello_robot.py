@@ -140,36 +140,44 @@ def main():
             print("4. 记录自定义日志")
             print("5. 退出程序")
         
-            choice = input("请选择 (1-5): ").strip()
-        
-            if choice == "1":
-                status = input("请输入机械臂状态 (已复位/绑定中/未复位): ").strip()
-                check_arm_status(status)
-                log_operation(f"检查状态: {status}")
-            
-            elif choice == "2":
-                print("\nOpenArm 常用命令列表：")
-                for i, cmd in enumerate(commands, 1):
-                    print(f"{i}. {cmd}")
-                
-            elif choice == "3":
-                print("\nOpenArm 命令数据库：")
-                for cmd, (desc, param) in commands_db.items():
-                    print(f"- {cmd}: {desc}")
-                    if param:
-                        print(f"  参数/密码: {param}")
-                    
-            elif choice == "4":
-                msg = input("请输入要记录的日志: ").strip()
-                log_operation(msg)
-            
-            elif choice == "5":
-                print("谢谢使用，再见！")
-                break
-            
-            else:
-                print("无效选择，请输入 1-5")
+            try:
+                choice = input("请选择 (1-5): ").strip()
+                choice_int = int(choice)  # 尝试转成整数
 
+        
+                if choice == "1":
+                    status = input("请输入机械臂状态 (已复位/绑定中/未复位): ").strip()
+                    check_arm_status(status)
+                    log_operation(f"检查状态: {status}")
+            
+                elif choice == "2":
+                    print("\nOpenArm 常用命令列表：")
+                    for i, cmd in enumerate(commands, 1):
+                        print(f"{i}. {cmd}")
+                
+                elif choice == "3":
+                    print("\nOpenArm 命令数据库：")
+                    for cmd, (desc, param) in commands_db.items():
+                        print(f"- {cmd}: {desc}")
+                        if param:
+                            print(f"  参数/密码: {param}")
+                    
+                elif choice == "4":
+                    msg = input("请输入要记录的日志: ").strip()
+                    log_operation(msg)
+            
+                elif choice == "5":
+                    print("谢谢使用，再见！")
+                    break
+            
+                else:
+                    print("无效选择，请输入 1-5")
+
+            except ValueError:
+                print("错误：请输入数字 1-5！")
+            except Exception as e:
+                print(f"发生未知错误：{e}")
+                print("程序继续运行...")
 
 
 # 程序入口（标准写法）
