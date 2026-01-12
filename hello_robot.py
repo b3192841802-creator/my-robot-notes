@@ -25,20 +25,25 @@ def check_arm_status(status):
         print("请先复位机械臂！")
         print("复位命令：./reset_to_initial.sh both")
 
-
 def log_operation(message):
     """
-    记录操作日志到 robot_log.txt 文件
-    参数: message (str) - 要记录的消息
+    记录操作日志到按日期命名的文件
+    每天自动生成新文件：robot_log_YYYY-MM-DD.txt
     """
     try:
+        # 获取当前日期字符串
+        today = datetime.now().strftime("%Y-%m-%d")
+        log_filename = f"robot_log_{today}.txt"  # 如 robot_log_2026-01-09.txt
+        
         now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         log_line = f"[{now}] {message}\n"
-    
-        with open("robot_log.txt", "a") as file:
+        
+        # 追加写到当天文件
+        with open(log_filename, "a", encoding="utf-8") as file:
             file.write(log_line)
-    
-        print(f"已记录日志：{log_line.strip()}")
+        
+        print(f"已记录日志到 {log_filename}：{log_line.strip()}")
+        
     except Exception as e:
         print(f"日志记录失败：{e}")
         print("可能是权限或路径问题，继续运行...")
